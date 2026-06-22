@@ -3,77 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elevated Recovery - Prospect Triage</title>
+    <title>Elevated Recovery - Reboot Strategist Tools</title>
     <style>
-        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background: #f8f9fa; }
-        .header { background: #111827; color: white; padding: 15px; text-align: center; font-size: 1.2em; }
+        body { font-family: Arial, sans-serif; margin: 0; background: #f4f4f4; }
+        .header { background: #111827; color: white; padding: 15px; text-align: center; font-size: 1.3em; }
         .container { display: flex; max-width: 1400px; margin: 20px auto; gap: 20px; padding: 0 20px; }
-        .left, .right { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); flex: 1; }
+        .panel { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); flex: 1; }
         h1 { color: #1e3a8a; margin-top: 0; }
         h2 { color: #1e3a8a; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; }
-        label { display: block; margin: 12px 0 5px; font-weight: bold; color: #374151; }
+        label { display: block; margin: 12px 0 5px; font-weight: bold; }
         select, input { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1em; }
         button { padding: 12px 24px; background: #1e3a8a; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1.1em; }
-        button:hover { background: #2e4a9a; }
         .result { margin-top: 20px; padding: 20px; border-radius: 8px; font-size: 1.3em; font-weight: bold; }
         .five { background: #d4edda; color: #155724; }
-        .four { background: #fef3c7; color: #92400e; }
-        .tips { background: #f0f9ff; padding: 15px; border-radius: 8px; margin: 15px 0; font-size: 0.95em; }
-        .phase { margin: 15px 0; padding-left: 15px; border-left: 4px solid #1e3a8a; }
+        .tips { background: #f0f9ff; padding: 15px; border-radius: 8px; margin: 15px 0; }
     </style>
 </head>
 <body>
     <div class="header">Elevated Recovery - Reboot Strategist Tools</div>
     <div class="container">
-        <!-- Left: Script -->
-        <div class="left">
+        <!-- Script -->
+        <div class="panel">
             <h1>Setting Call Script</h1>
             
-            <div class="phase">
-                <strong>Frame</strong><br>
-                "Hi [Name], it's [Your Name] from Elevated Recovery, can you hear me okay?<br>
-                I am one of the Reboot Strategists on JK’s team.<br>
-                Did I catch you at a bad time? ... private conversation?"
-            </div>
+            <h2>Frame</h2>
+            <p>"Hi [Name], it's [Your Name] from Elevated Recovery..." (use your full opening)</p>
 
-            <div class="phase">
-                <strong>Situation</strong><br>
-                How long has this been part of your life? How often do you find yourself going to it?<br>
-                When was the last time you went to it? What usually triggers it?
-            </div>
+            <h2>Situation</h2>
+            <p>How long has this been part of your life? How often do you find yourself going to it?</p>
+            <p>When was the last time you went to it? What usually triggers it?</p>
 
-            <div class="phase">
-                <strong>Gap</strong><br>
-                How has your life been impacted by this — especially your relationship, work, energy, or confidence?<br>
-                What price have you already paid because of this?<br>
-                What do you think continues to happen if nothing changes in the next 6–12 months?
-            </div>
+            <h2>Gap</h2>
+            <p>How has your life been impacted by this — especially your relationship, work, energy, or confidence?</p>
+            <p>What price have you already paid because of this?</p>
+            <p>What do you think continues to happen if nothing changes in the next 6–12 months?</p>
 
-            <div class="phase">
-                <strong>Missing / Ideal</strong><br>
-                What have you been doing to end this behavior?<br>
-                Ideally, what would your life look like once this is truly behind you?<br>
-                What do you feel you need to resolve this once and for all?
-            </div>
+            <h2>Missing / Ideal</h2>
+            <p>What have you been doing to end this behavior?</p>
+            <p>Ideally, what would your life look like once this is truly behind you?</p>
+            <p>What do you feel you need to resolve this once and for all?</p>
 
-            <div class="phase">
-                <strong>Urgency</strong><br>
-                You've been dealing with this for X time... so is resolving it a later or a sooner thing for you?
-            </div>
+            <h2>Urgency</h2>
+            <p>You've been dealing with this for X time... so is resolving it a later or a sooner thing for you?</p>
 
-            <div class="phase">
-                <strong>Recap + Qualifier</strong><br>
-                Just to make sure I understand... [reflect pain]. Is that accurate?<br>
-                Tell me about what you do for work... (income + decision power)<br>
-                Final Fit: "Does that describe where you're at right now?"
-            </div>
+            <h2>Recap + Qualifier</h2>
+            <p>Just to make sure I understand... [reflect their pain]. Is that accurate?</p>
+            <p>Tell me about what you do for work... (income + decision power)</p>
+            <p>Final Fit: "Does that describe where you're at right now?"</p>
         </div>
 
-        <!-- Right: Calculator -->
-        <div class="right">
+        <!-- Calculator -->
+        <div class="panel">
             <h1>Triage Calculator</h1>
-            <!-- Add your full calculator fields here if needed - let me know for expansion -->
-            <p>Calculator fields will be expanded in the next version.</p>
+            <!-- Add your full calculator here if needed -->
+            <p>Calculator fields will be expanded in the next version if needed.</p>
             <button onclick="alert('Calculator ready - fields can be added here')">Calculate Scores</button>
         </div>
     </div>
