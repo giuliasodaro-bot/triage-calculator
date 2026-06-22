@@ -8,7 +8,7 @@
         body { font-family: Arial, sans-serif; margin: 0; background: #f4f4f4; }
         .header { background: #111827; color: white; padding: 15px; text-align: center; font-size: 1.3em; }
         .container { display: flex; max-width: 1400px; margin: 20px auto; gap: 20px; padding: 0 20px; }
-        .panel { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); flex: 1; }
+        .panel { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); flex: 1; overflow-y: auto; max-height: 90vh; }
         h1 { color: #1e3a8a; margin-top: 0; }
         h2 { color: #1e3a8a; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; }
         label { display: block; margin: 12px 0 5px; font-weight: bold; }
@@ -16,7 +16,7 @@
         button { padding: 12px 24px; background: #1e3a8a; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1.1em; }
         .result { margin-top: 20px; padding: 20px; border-radius: 8px; font-size: 1.3em; font-weight: bold; }
         .five { background: #d4edda; color: #155724; }
-        .tips { background: #f0f9ff; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .four { background: #fef3c7; color: #92400e; }
     </style>
 </head>
 <body>
@@ -47,7 +47,7 @@
             <p>You've been dealing with this for X time... so is resolving it a later or a sooner thing for you?</p>
 
             <h2>Recap + Qualifier</h2>
-            <p>Just to make sure I understand... [reflect their pain]. Is that accurate?</p>
+            <p>Just to make sure I understand... [reflect pain]. Is that accurate?</p>
             <p>Tell me about what you do for work... (income + decision power)</p>
             <p>Final Fit: "Does that describe where you're at right now?"</p>
         </div>
@@ -55,10 +55,70 @@
         <!-- Calculator -->
         <div class="panel">
             <h1>Triage Calculator</h1>
-            <!-- Add your full calculator here if needed -->
-            <p>Calculator fields will be expanded in the next version if needed.</p>
-            <button onclick="alert('Calculator ready - fields can be added here')">Calculate Scores</button>
+            
+            <label>Frequency of Use</label>
+            <select id="frequency">
+                <option value="1">Rare</option>
+                <option value="2">Few times/year</option>
+                <option value="3">Monthly</option>
+                <option value="4">1-3x/week</option>
+                <option value="5">4-6x/week</option>
+                <option value="6">Daily</option>
+            </select>
+
+            <label>Days Since Last Relapse</label>
+            <input type="number" id="daysRelapse" value="3" min="0">
+
+            <label>Overall Duration (years)</label>
+            <input type="number" id="duration" value="3" min="0" step="0.5">
+
+            <label>Time Trying to Quit (months)</label>
+            <input type="number" id="quitAttempts" value="6" min="0">
+
+            <label>Income Points (0-5)</label>
+            <select id="income">
+                <option value="0">Under $25k</option>
+                <option value="2">$25k–$44k</option>
+                <option value="3">$45k–$74k</option>
+                <option value="4">$75k–$119k</option>
+                <option value="5">$120k+</option>
+            </select>
+
+            <label>Relationship Points (1-4)</label>
+            <select id="relationship">
+                <option value="1">Single / Toxic</option>
+                <option value="2">Single, wants wife</option>
+                <option value="3">Married / Committed</option>
+                <option value="4">Married + trouble</option>
+            </select>
+
+            <button onclick="calculate()">Calculate Scores</button>
+
+            <div id="result" class="result"></div>
         </div>
     </div>
+
+    <script>
+        function calculate() {
+            let freq = parseInt(document.getElementById('frequency').value) || 3;
+            let days = parseInt(document.getElementById('daysRelapse').value) || 0;
+            let duration = parseFloat(document.getElementById('duration').value) || 0;
+            let quit = parseFloat(document.getElementById('quitAttempts').value) || 0;
+            let income = parseInt(document.getElementById('income').value) || 3;
+            let rel = parseInt(document.getElementById('relationship').value) || 3;
+
+            let severity = Math.min(6, Math.max(1, freq + (days < 8 ? 1 : 0) + Math.round(duration) + Math.round(quit/12)));
+            let totalStars = income + rel + 5; // simplified for demo
+
+            let stars = totalStars >= 18 ? "5 ⭐" : totalStars >= 14 ? "4 ⭐" : totalStars >= 10 ? "3 ⭐" : totalStars >= 6 ? "2 ⭐" : "1 ⭐";
+
+            document.getElementById('result').innerHTML = `
+                Severity: <strong>${severity}/6</strong><br>
+                Star Rating: <strong>${stars}</strong><br>
+                Total Points: <strong>${totalStars}</strong>
+            `;
+            document.getElementById('result').style.background = totalStars >= 18 ? '#d4edda' : totalStars >= 14 ? '#fef3c7' : '#f3f4f6';
+        }
+    </script>
 </body>
 </html>
