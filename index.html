@@ -12,11 +12,12 @@
         h1 { color: #1e3a8a; margin-top: 0; }
         h2 { color: #1e3a8a; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; }
         label { display: block; margin: 12px 0 5px; font-weight: bold; }
-        select, input { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1em; }
+        select, input { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; }
         button { padding: 12px 24px; background: #1e3a8a; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1.1em; }
         .result { margin-top: 20px; padding: 20px; border-radius: 8px; font-size: 1.3em; font-weight: bold; }
         .five { background: #d4edda; color: #155724; }
         .four { background: #fef3c7; color: #92400e; }
+        .phase { margin: 15px 0; padding-left: 15px; border-left: 4px solid #1e3a8a; }
     </style>
 </head>
 <body>
@@ -26,40 +27,54 @@
         <div class="panel">
             <h1>Setting Call Script</h1>
             
-            <h2>Frame</h2>
-            <p>"Hi [Name], it's [Your Name] from Elevated Recovery..." (use your full opening)</p>
+            <div class="phase">
+                <strong>Frame</strong><br>
+                "Hi [Name], it's [Your Name] from Elevated Recovery, can you hear me okay?<br>
+                I am one of the Reboot Strategists on JK’s team.<br>
+                Did I catch you at a bad time? ... private conversation?"
+            </div>
 
-            <h2>Situation</h2>
-            <p>How long has this been part of your life? How often do you find yourself going to it?</p>
-            <p>When was the last time you went to it? What usually triggers it?</p>
+            <div class="phase">
+                <strong>Situation</strong><br>
+                How long has this been part of your life? How often do you find yourself going to it?<br>
+                When was the last time you went to it? What usually triggers it?
+            </div>
 
-            <h2>Gap</h2>
-            <p>How has your life been impacted by this — especially your relationship, work, energy, or confidence?</p>
-            <p>What price have you already paid because of this?</p>
-            <p>What do you think continues to happen if nothing changes in the next 6–12 months?</p>
+            <div class="phase">
+                <strong>Gap</strong><br>
+                How has your life been impacted by this — especially your relationship, work, energy, or confidence?<br>
+                What price have you already paid because of this?<br>
+                What do you think continues to happen if nothing changes in the next 6–12 months?
+            </div>
 
-            <h2>Missing / Ideal</h2>
-            <p>What have you been doing to end this behavior?</p>
-            <p>Ideally, what would your life look like once this is truly behind you?</p>
-            <p>What do you feel you need to resolve this once and for all?</p>
+            <div class="phase">
+                <strong>Missing / Ideal</strong><br>
+                What have you been doing to end this behavior?<br>
+                Ideally, what would your life look like once this is truly behind you?<br>
+                What do you feel you need to resolve this once and for all?
+            </div>
 
-            <h2>Urgency</h2>
-            <p>You've been dealing with this for X time... so is resolving it a later or a sooner thing for you?</p>
+            <div class="phase">
+                <strong>Urgency</strong><br>
+                You've been dealing with this for X time... so is resolving it a later or a sooner thing for you?
+            </div>
 
-            <h2>Recap + Qualifier</h2>
-            <p>Just to make sure I understand... [reflect pain]. Is that accurate?</p>
-            <p>Tell me about what you do for work... (income + decision power)</p>
-            <p>Final Fit: "Does that describe where you're at right now?"</p>
+            <div class="phase">
+                <strong>Recap + Qualifier</strong><br>
+                Just to make sure I understand... [reflect pain]. Is that accurate?<br>
+                Tell me about what you do for work... (income + decision power)<br>
+                Final Fit: "Does that describe where you're at right now?"
+            </div>
         </div>
 
         <!-- Calculator -->
         <div class="panel">
             <h1>Triage Calculator</h1>
             
-            <label>Frequency of Use</label>
+            <h2>Severity (1-6)</h2>
+            <label>Frequency</label>
             <select id="frequency">
                 <option value="1">Rare</option>
-                <option value="2">Few times/year</option>
                 <option value="3">Monthly</option>
                 <option value="4">1-3x/week</option>
                 <option value="5">4-6x/week</option>
@@ -75,6 +90,7 @@
             <label>Time Trying to Quit (months)</label>
             <input type="number" id="quitAttempts" value="6" min="0">
 
+            <h2>Star Qualification</h2>
             <label>Income Points (0-5)</label>
             <select id="income">
                 <option value="0">Under $25k</option>
@@ -92,8 +108,27 @@
                 <option value="4">Married + trouble</option>
             </select>
 
-            <button onclick="calculate()">Calculate Scores</button>
+            <label>Decision Power (1-3)</label>
+            <select id="decision">
+                <option value="1">Cannot decide alone</option>
+                <option value="2">With wife</option>
+                <option value="3">Alone</option>
+            </select>
 
+            <label>JK Awareness (1-3)</label>
+            <select id="jk">
+                <option value="1">New to JK</option>
+                <option value="2">1–2 months</option>
+                <option value="3">3+ months</option>
+            </select>
+
+            <label>Pain Awareness (1 or 3)</label>
+            <select id="pain">
+                <option value="1">Thinks he can do it alone</option>
+                <option value="3">High pain + needs pro help</option>
+            </select>
+
+            <button onclick="calculate()">Calculate Scores</button>
             <div id="result" class="result"></div>
         </div>
     </div>
@@ -106,9 +141,14 @@
             let quit = parseFloat(document.getElementById('quitAttempts').value) || 0;
             let income = parseInt(document.getElementById('income').value) || 3;
             let rel = parseInt(document.getElementById('relationship').value) || 3;
+            let dec = parseInt(document.getElementById('decision').value) || 2;
+            let jk = parseInt(document.getElementById('jk').value) || 2;
+            let pain = parseInt(document.getElementById('pain').value) || 3;
 
-            let severity = Math.min(6, Math.max(1, freq + (days < 8 ? 1 : 0) + Math.round(duration) + Math.round(quit/12)));
-            let totalStars = income + rel + 5; // simplified for demo
+            let severity = freq + (days < 8 ? 1 : 0) + Math.round(duration) + Math.round(quit/12);
+            severity = Math.min(6, Math.max(1, Math.round(severity)));
+
+            let totalStars = income + rel + dec + jk + pain + 5; // simplified
 
             let stars = totalStars >= 18 ? "5 ⭐" : totalStars >= 14 ? "4 ⭐" : totalStars >= 10 ? "3 ⭐" : totalStars >= 6 ? "2 ⭐" : "1 ⭐";
 
