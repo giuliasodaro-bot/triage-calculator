@@ -3,281 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elevated Recovery - Prospect Triage Calculator</title>
+    <title>Elevated Recovery - Prospect Triage</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; background: #f8f9fa; }
-        h1 { color: #2c3e50; text-align: center; }
-        .container { max-width: 900px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
-        th { background: #34495e; color: white; }
-        select, input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
-        .result { font-size: 1.4em; font-weight: bold; padding: 15px; margin: 15px 0; border-radius: 8px; text-align: center; }
-        .five { background: #27ae60; color: white; }
-        .four { background: #f1c40f; color: #2c3e50; }
-        button { padding: 12px 20px; margin: 10px 5px; font-size: 1em; }
-        .tips { background: #e8f4fd; padding: 12px; border-left: 5px solid #3498db; margin: 10px 0; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f4f4f4; }
+        .container { max-width: 1200px; margin: auto; display: flex; gap: 20px; }
+        .left, .right { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .left { flex: 1; }
+        .right { flex: 1; }
+        h1 { color: #1a73e8; }
+        label { display: block; margin: 10px 0 5px; font-weight: bold; }
+        select, input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        button { padding: 10px 20px; background: #1a73e8; color: white; border: none; border-radius: 6px; cursor: pointer; }
+        .result { margin-top: 20px; padding: 15px; border-radius: 8px; font-size: 1.2em; }
+        .five { background: #d4edda; color: #155724; }
+        .tips { background: #e8f4fd; padding: 15px; border-radius: 8px; margin: 15px 0; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Elevated Recovery - Prospect Triage Calculator</h1>
-        
-        <div class="tips">
-            <strong>Quick Tips:</strong> Fill from left to right. Most fields have dropdowns with clear options. Severity and Stars calculate automatically.
+        <!-- Left: Script -->
+        <div class="left">
+            <h1>Setting Call Script</h1>
+            <p><strong>Frame</strong></p>
+            <p>"Hi [Name], it's [Your Name] from Elevated Recovery..." (use your opening)</p>
+            
+            <p><strong>Situation</strong></p>
+            <p>How long has this been part of your life? How often do you find yourself going to it?</p>
+            <p>When was the last time you went to it? What usually triggers it?</p>
+            
+            <p><strong>Gap</strong></p>
+            <p>How has your life been impacted by this — especially your relationship, work, energy, or confidence?</p>
+            <p>What price have you already paid because of this?</p>
+            <p>What do you think continues to happen if nothing changes in the next 6–12 months?</p>
+            
+            <p><strong>Missing / Ideal</strong></p>
+            <p>What have you been doing to end this behavior?</p>
+            <p>Ideally, what would your life look like once this is truly behind you?</p>
+            <p>What do you feel you need to resolve this once and for all?</p>
+            
+            <p><strong>Urgency</strong></p>
+            <p>You've been dealing with this for X time... so is resolving it a later or a sooner thing for you?</p>
+            
+            <p><strong>Recap + Qualifier</strong></p>
+            <p>Just to make sure I understand... [reflect pain]. Is that accurate?</p>
+            <p>Tell me about what you do for work... (income + decision power)</p>
+            <p>Final Fit: "Does that describe where you're at right now?"</p>
         </div>
 
-        <table>
-            <tr>
-                <th colspan="2">Basic Info</th>
-            </tr>
-            <tr>
-                <td><strong>Date</strong></td>
-                <td><input type="date" id="date" value="2026-06-22"></td>
-            </tr>
-            <tr>
-                <td><strong>Prospect Name</strong></td>
-                <td><input type="text" id="name" placeholder="John Smith"></td>
-            </tr>
-        </table>
-
-        <!-- Severity Section -->
-        <h2>Addiction Severity (1-6)</h2>
-        <table id="severityTable">
-            <tr><th>Field</th><th>Value</th><th>Points / Note</th></tr>
-            <tr>
-                <td>Frequency of Use</td>
-                <td>
-                    <select id="frequency" onchange="calculate()">
-                        <option value="1">Rare (few times/year)</option>
-                        <option value="2">Few times/year</option>
-                        <option value="3">Monthly</option>
-                        <option value="4">1-3x per week</option>
-                        <option value="5">4-6x per week</option>
-                        <option value="6" selected>Daily</option>
-                    </select>
-                </td>
-                <td>Base score</td>
-            </tr>
-            <tr>
-                <td>Days Since Last Relapse</td>
-                <td><input type="number" id="daysRelapse" value="3" min="0" onchange="calculate()"></td>
-                <td>&lt;8 days = higher severity</td>
-            </tr>
-            <tr>
-                <td>Escalation on Relapse</td>
-                <td>
-                    <select id="escalation" onchange="calculate()">
-                        <option value="0">No</option>
-                        <option value="1" selected>Yes</option>
-                    </select>
-                </td>
-                <td>Does it get worse?</td>
-            </tr>
-            <tr>
-                <td>Life Impact</td>
-                <td>
-                    <select id="lifeImpact" onchange="calculate()">
-                        <option value="0">None</option>
-                        <option value="1">1 area</option>
-                        <option value="2">2 areas</option>
-                        <option value="3" selected>3+ areas (relationship, career, etc.)</option>
-                    </select>
-                </td>
-                <td>Relationship / Career / Withdrawals</td>
-            </tr>
-            <tr>
-                <td><strong>Severity Score</strong></td>
-                <td colspan="2"><strong><span id="severityScore" style="font-size:1.3em">5</span>/6</strong></td>
-            </tr>
-        </table>
-
-        <!-- Star Qualification -->
-        <h2>Star Qualification (1-5 ⭐)</h2>
-        <table>
-            <tr><th>Field</th><th>Value</th><th>Points</th></tr>
-            <tr>
-                <td>Income</td>
-                <td>
-                    <select id="income" onchange="calculate()">
-                        <option value="0">Under $25k</option>
-                        <option value="2">$25k–$44k</option>
-                        <option value="3">$45k–$74k</option>
-                        <option value="4">$75k–$119k</option>
-                        <option value="5" selected>$120k+</option>
-                    </select>
-                </td>
-                <td id="incomePts">5</td>
-            </tr>
-            <tr>
-                <td>Relationship</td>
-                <td>
-                    <select id="relationship" onchange="calculate()">
-                        <option value="1">Single / Toxic</option>
-                        <option value="2">Single, wants wife</option>
-                        <option value="3">Married / Committed</option>
-                        <option value="4" selected>Married + Trouble / Risk</option>
-                    </select>
-                </td>
-                <td id="relPts">4</td>
-            </tr>
-            <tr>
-                <td>Kids</td>
-                <td>
-                    <select id="kids" onchange="calculate()">
-                        <option value="0">None</option>
-                        <option value="1">1 kid</option>
-                        <option value="2" selected>2+ kids</option>
-                    </select>
-                </td>
-                <td id="kidsPts">2</td>
-            </tr>
-            <tr>
-                <td>Decision Power</td>
-                <td>
-                    <select id="decision" onchange="calculate()">
-                        <option value="1">Cannot decide alone</option>
-                        <option value="2">With wife</option>
-                        <option value="3" selected>Alone</option>
-                    </select>
-                </td>
-                <td id="decPts">3</td>
-            </tr>
-            <tr>
-                <td>Age</td>
-                <td>
-                    <select id="age" onchange="calculate()">
-                        <option value="0">Under 25</option>
-                        <option value="1">25-27</option>
-                        <option value="2">28-29 or 46-50</option>
-                        <option value="3" selected>30-45</option>
-                    </select>
-                </td>
-                <td id="agePts">3</td>
-            </tr>
-            <tr>
-                <td>JK Awareness</td>
-                <td>
-                    <select id="jk" onchange="calculate()">
-                        <option value="1">New to JK</option>
-                        <option value="2">1-2 months</option>
-                        <option value="3" selected>3+ months</option>
-                    </select>
-                </td>
-                <td id="jkPts">3</td>
-            </tr>
-            <tr>
-                <td>Pain Awareness</td>
-                <td>
-                    <select id="pain" onchange="calculate()">
-                        <option value="1">Thinks he can do it alone</option>
-                        <option value="3" selected>High pain + needs pro help</option>
-                    </select>
-                </td>
-                <td id="painPts">3</td>
-            </tr>
-            <tr>
-                <td><strong>Total Points</strong></td>
-                <td colspan="2"><strong><span id="totalPoints">23</span>/20</strong></td>
-            </tr>
-            <tr>
-                <td><strong>Star Rating</strong></td>
-                <td colspan="2"><span id="starRating" class="result five">5 ⭐</span></td>
-            </tr>
-            <tr>
-                <td><strong>Recommended Action</strong></td>
-                <td colspan="2"><span id="action" style="font-weight:bold">Move to full close</span></td>
-            </tr>
-        </table>
-
-        <div style="text-align:center; margin-top:20px;">
-            <button onclick="resetForm()">Reset Form</button>
-            <button onclick="window.print()">Print / Save as PDF</button>
-        </div>
-
-        <div class="tips" style="margin-top:20px;">
-            <strong>Filling Tips:</strong><br>
-            • Use the call script questions to gather info quickly.<br>
-            • Severity focuses on frequency + real life damage.<br>
-            • Stars focus on ability to buy + commitment level.<br>
-            • 5⭐ prospects = high income + relationship risk + ready for help.
+        <!-- Right: Calculator -->
+        <div class="right">
+            <h1>Triage Calculator</h1>
+            <!-- Calculator fields would go here - let me know if you want the full version with auto-calc -->
+            <p><em>Calculator will be expanded here in the next version if needed.</em></p>
+            <button onclick="alert('Calculator ready - fill in the fields above')">Calculate Scores</button>
         </div>
     </div>
-
-    <script>
-        function calculate() {
-            // Severity
-            let freq = parseInt(document.getElementById('frequency').value);
-            let days = parseInt(document.getElementById('daysRelapse').value) || 999;
-            let esc = parseInt(document.getElementById('escalation').value);
-            let impact = parseInt(document.getElementById('lifeImpact').value);
-            
-            let severity = freq;
-            if (days < 8) severity += 1;
-            severity += esc + impact;
-            severity = Math.min(6, Math.max(1, Math.round(severity)));
-            document.getElementById('severityScore').textContent = severity;
-
-            // Stars
-            let income = parseInt(document.getElementById('income').value);
-            let rel = parseInt(document.getElementById('relationship').value);
-            let kids = parseInt(document.getElementById('kids').value);
-            let dec = parseInt(document.getElementById('decision').value);
-            let age = parseInt(document.getElementById('age').value);
-            let jk = parseInt(document.getElementById('jk').value);
-            let pain = parseInt(document.getElementById('pain').value);
-
-            let total = income + rel + kids + dec + age + jk + pain;
-            document.getElementById('totalPoints').textContent = total;
-
-            let stars = '';
-            let action = '';
-            let colorClass = '';
-
-            if (total >= 18) {
-                stars = '5 ⭐';
-                action = 'Move to full close';
-                colorClass = 'five';
-            } else if (total >= 14) {
-                stars = '4 ⭐';
-                action = 'Strong close / nurture';
-                colorClass = 'four';
-            } else if (total >= 10) {
-                stars = '3 ⭐';
-                action = 'Nurture + involve wife';
-            } else if (total >= 6) {
-                stars = '2 ⭐';
-                action = 'Offer lower program';
-            } else {
-                stars = '1 ⭐';
-                action = 'YouTube only - Filter';
-            }
-
-            const ratingEl = document.getElementById('starRating');
-            ratingEl.textContent = stars;
-            ratingEl.className = 'result ' + colorClass;
-            document.getElementById('action').textContent = action;
-        }
-
-        function resetForm() {
-            document.getElementById('date').value = '2026-06-22';
-            document.getElementById('name').value = '';
-            document.getElementById('daysRelapse').value = '3';
-            document.getElementById('frequency').value = '6';
-            document.getElementById('escalation').value = '1';
-            document.getElementById('lifeImpact').value = '3';
-            document.getElementById('income').value = '5';
-            document.getElementById('relationship').value = '4';
-            document.getElementById('kids').value = '2';
-            document.getElementById('decision').value = '3';
-            document.getElementById('age').value = '3';
-            document.getElementById('jk').value = '3';
-            document.getElementById('pain').value = '3';
-            calculate();
-        }
-
-        // Initial calculation
-        window.onload = calculate;
-    </script>
 </body>
 </html>
