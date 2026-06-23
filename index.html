@@ -9,21 +9,32 @@
         .header { background: #111827; color: white; padding: 15px; text-align: center; font-size: 1.3em; }
         .container { display: flex; max-width: 1400px; margin: 20px auto; gap: 20px; padding: 0 20px; }
         .panel { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); flex: 1; overflow-y: auto; max-height: 90vh; }
-        h1 { color: #1e3a8a; margin-top: 0; }
-        h2 { color: #1e3a8a; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; }
+        h1 { color: #4b5563; margin-top: 0; }
+        h2 { color: #4b5563; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; }
         label { display: block; margin: 12px 0 5px; font-weight: bold; }
         select, input { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; }
-        button { padding: 12px 24px; background: #1e3a8a; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1.1em; }
+        button { padding: 12px 24px; background: #4b5563; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1.1em; }
         .result { margin-top: 20px; padding: 20px; border-radius: 8px; font-size: 1.3em; font-weight: bold; }
         .five { background: #d4edda; color: #155724; }
         .four { background: #fef3c7; color: #92400e; }
-        .phase { margin: 15px 0; padding-left: 15px; border-left: 4px solid #1e3a8a; }
-    </style>
+        .phase { margin: 15px 0; padding-left: 15px; border-left: 4px solid #4b5563; }
+    
+.tabs{display:flex;gap:10px;margin-bottom:15px}
+.tab-btn{background:#6b7280}
+.dashboard-table{width:100%;border-collapse:collapse;margin-top:15px}
+.dashboard-table th,.dashboard-table td{border:1px solid #d1d5db;padding:8px;text-align:left}
+
+</style>
 </head>
 <body>
     <div class="header">Elevated Recovery - Reboot Strategist Tools</div>
+<div class="tabs" style="padding:15px 20px;max-width:1400px;margin:auto;">
+<button class="tab-btn" onclick="showTab('calculator')">Questionnaire</button>
+<button class="tab-btn" onclick="showTab('dashboard')">Dashboard</button>
+</div>
+
     <div class="container">
-        <!-- Script -->
+        <!-- Script Left -->
         <div class="panel">
             <h1>Setting Call Script</h1>
             
@@ -55,10 +66,9 @@
 
             <div class="phase">
                 <strong>Missing / Ideal</strong><br>
-                What have you been doing to end this behavior and reboot your life?<br>
-                What do you feel is still missing for you to actually solve this once and for all?<br>
-                "Ideally, what would your life look like once this is truly behind you?"<br>
-                What do you feel you need in order to resolve the situation once and for all?
+                “What have you been doing to end this behavior and reboot your life?”<br><br>
+                “What do you feel is still missing for you to actually solve this once and for all?”<br><br>
+                Usually, the men we help have tried everything under the sun, and that’s why they come to us, because they want something that can finally resolve their situation.
             </div>
 
             <div class="phase">
@@ -78,11 +88,19 @@
             </div>
         </div>
 
-        <!-- Calculator -->
+        <!-- Calculator Right -->
         <div class="panel">
             <h1>Triage Calculator</h1>
             
-            <h2>Frame / Situation</h2>
+            <label>Date</label>
+            <input type="date" id="date">
+
+            <label>Name</label>
+            <input type="text" id="name" placeholder="Prospect Name">
+
+            <label>How Long Dealing With This (years)</label>
+            <input type="number" id="duration" value="3" min="0" step="0.5">
+
             <label>Frequency of Use</label>
             <select id="frequency">
                 <option value="1">Rare</option>
@@ -92,22 +110,22 @@
                 <option value="6">Daily</option>
             </select>
 
-            <label>Days Since Last Relapse</label>
+            <label>Days since last relapse</label>
             <input type="number" id="daysRelapse" value="3" min="0">
 
-            <label>How Long Dealing With This (years)</label>
-            <input type="number" id="duration" value="3" min="0" step="0.5">
+            <label>Escalation on Relapse</label>
+            <select id="escalation">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
 
-            <h2>Gap</h2>
-            <label>Life Impact (0-3)</label>
+            <label>Life Impact Score (0-3)</label>
             <input type="number" id="lifeImpact" value="2" min="0" max="3">
 
-            <h2>Missing / Ideal</h2>
-            <label>Time Trying to Quit (months)</label>
-            <input type="number" id="quitAttempts" value="6" min="0">
+            <label>Withdrawal Symptoms</label>
+            <input type="number" id="withdrawal" value="1" min="0" max="2">
 
-            <h2>Urgency / Recap</h2>
-            <label>Income Points (0-5)</label>
+            <label>Income Points</label>
             <select id="income">
                 <option value="0">Under $25k</option>
                 <option value="2">$25k–$44k</option>
@@ -116,7 +134,7 @@
                 <option value="5">$120k+</option>
             </select>
 
-            <label>Relationship Points (1-4)</label>
+            <label>Relationship points</label>
             <select id="relationship">
                 <option value="1">Single / Toxic</option>
                 <option value="2">Single, wants wife</option>
@@ -124,57 +142,120 @@
                 <option value="4">Married + trouble</option>
             </select>
 
-            <label>Decision Power (1-3)</label>
+            <label>Kids</label>
+            <select id="kids">
+                <option value="0">None</option>
+                <option value="1">1 kid</option>
+                <option value="2">2+ kids</option>
+            </select>
+
+            <label>Decision</label>
             <select id="decision">
                 <option value="1">Cannot decide alone</option>
                 <option value="2">With wife</option>
                 <option value="3">Alone</option>
             </select>
 
-            <label>JK Awareness (1-3)</label>
+            <label>Age</label>
+            <select id="age">
+                <option value="0">Under 25 or over 50</option>
+                <option value="1">25–27</option>
+                <option value="2">28–29 or 46–50</option>
+                <option value="3">30–45</option>
+            </select>
+
+            <label>JK Follow</label>
             <select id="jk">
                 <option value="1">New to JK</option>
                 <option value="2">1–2 months</option>
                 <option value="3">3+ months</option>
             </select>
 
-            <label>Pain Awareness (1 or 3)</label>
+            <label>Pain</label>
             <select id="pain">
                 <option value="1">Thinks he can do it alone</option>
                 <option value="3">High pain + needs pro help</option>
             </select>
 
-            <button onclick="calculate()">Calculate Scores</button>
+            <button onclick="calculate()">Calculate</button>
             <div id="result" class="result"></div>
-        </div>
-    </div>
+        
+<div class="panel" id="dashboardPanel" style="display:none;">
+<h1>Prospect Dashboard</h1>
+<table class="dashboard-table">
+<thead><tr><th>Date</th><th>Name</th><th>Severity</th><th>Stars</th><th>View</th></tr></thead>
+<tbody id="prospectTable"></tbody>
+</table>
+<div id="prospectDetail" style="margin-top:20px;"></div>
+</div>
 
-    <script>
+</div>
+
+<script>
         function calculate() {
             let freq = parseInt(document.getElementById('frequency').value) || 3;
             let days = parseInt(document.getElementById('daysRelapse').value) || 0;
             let duration = parseFloat(document.getElementById('duration').value) || 0;
-            let quit = parseFloat(document.getElementById('quitAttempts').value) || 0;
-            let income = parseInt(document.getElementById('income').value) || 3;
-            let rel = parseInt(document.getElementById('relationship').value) || 3;
-            let dec = parseInt(document.getElementById('decision').value) || 2;
-            let jk = parseInt(document.getElementById('jk').value) || 2;
-            let pain = parseInt(document.getElementById('pain').value) || 3;
+            let esc = parseInt(document.getElementById('escalation').value) || 0;
+            let impact = parseInt(document.getElementById('lifeImpact').value) || 0;
+            let withdrawal = parseInt(document.getElementById('withdrawal').value) || 0;
+            let income = parseInt(document.getElementById('income').value) || 0;
+            let relationship = parseInt(document.getElementById('relationship').value) || 1;
+            let kids = parseInt(document.getElementById('kids').value) || 0;
+            let decision = parseInt(document.getElementById('decision').value) || 1;
+            let age = parseInt(document.getElementById('age').value) || 0;
+            let jk = parseInt(document.getElementById('jk').value) || 1;
+            let pain = parseInt(document.getElementById('pain').value) || 1;
 
-            let severity = freq + (days < 8 ? 1 : 0) + Math.round(duration) + Math.round(quit/12);
+            let severity = freq + (days < 8 ? 1 : 0) + esc + impact + withdrawal;
             severity = Math.min(6, Math.max(1, Math.round(severity)));
 
-            let totalStars = income + rel + dec + jk + pain + 5;
+            let totalStars = income + relationship + kids + decision + age + jk + pain;
 
             let stars = totalStars >= 18 ? "5 ⭐" : totalStars >= 14 ? "4 ⭐" : totalStars >= 10 ? "3 ⭐" : totalStars >= 6 ? "2 ⭐" : "1 ⭐";
 
             document.getElementById('result').innerHTML = `
                 Severity: <strong>${severity}/6</strong><br>
-                Star Rating: <strong>${stars}</strong><br>
-                Total Points: <strong>${totalStars}</strong>
+                Total Stars Points: <strong>${totalStars}</strong><br>
+                Star Rating: <strong>${stars}</strong>
             `;
-            document.getElementById('result').style.background = totalStars >= 18 ? '#d4edda' : totalStars >= 14 ? '#fef3c7' : '#f3f4f6';
+            document.getElementById('result').style.background = totalStars >= 18 ? '#d4edda' : totalStars >= 14 ? '#fef3c7' : '#f3f4f6'; saveProspect(severity,totalStars,stars);
         }
-    </script>
+    
+function showTab(tab){
+ document.querySelectorAll('.panel').forEach(p=>p.style.display='none');
+ if(tab==='dashboard'){document.getElementById('dashboardPanel').style.display='block';loadDashboard();}
+ else{document.querySelectorAll('.panel')[0].style.display='block';document.querySelectorAll('.panel')[1].style.display='block';}
+}
+
+function saveProspect(severity,totalStars,stars){
+ const prospect={
+   id:Date.now(),
+   date:document.getElementById('date').value,
+   name:document.getElementById('name').value,
+   severity,totalStars,stars
+ };
+ let prospects=JSON.parse(localStorage.getItem('prospects')||'[]');
+ prospects.push(prospect);
+ localStorage.setItem('prospects',JSON.stringify(prospects));
+}
+
+function loadDashboard(){
+ const prospects=JSON.parse(localStorage.getItem('prospects')||'[]');
+ const tbody=document.getElementById('prospectTable');
+ if(!tbody) return;
+ tbody.innerHTML='';
+ prospects.forEach(p=>{
+   tbody.innerHTML+=`<tr><td>${p.date}</td><td>${p.name}</td><td>${p.severity}</td><td>${p.stars}</td><td><button onclick="openProspect(${p.id})">Open</button></td></tr>`;
+ });
+}
+
+function openProspect(id){
+ const prospects=JSON.parse(localStorage.getItem('prospects')||'[]');
+ const p=prospects.find(x=>x.id===id);
+ document.getElementById('prospectDetail').innerHTML=`<h2>${p.name}</h2><p>Date: ${p.date}</p><p>Severity: ${p.severity}/6</p><p>Stars: ${p.stars}</p>`;
+}
+
+</script>
 </body>
 </html>
